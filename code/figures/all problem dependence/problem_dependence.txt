@@ -1,0 +1,28 @@
+Calculate approximation ratios for different problem instances and for all three approaches.
+1. QuadQAOA
+Parameters: p = 4, a = 1
+Problem A: b = 4, rho = 0.7852390361080505
+Problem B: b = 4, rho = 0.7852390351380075
+Problem C: b = 4, rho = 0.6751294953429662
+Problem D: b = 4, rho = 0.588899088194157
+Problem E: b = 8, rho = 0.4010330726948032
+Problem F: b = 10, rho = 0.2892650621955738
+Problem G: b = 6, rho = 0.343872406269758
+2. LinQAOA
+Parameters: p = 2
+Problem A: a = 4, rho = 0.9999999999999893
+Problem B: a = 4, rho = 0.375
+Problem C: a = 4, rho = 0.9999999999999983
+Problem D: a = 4, rho = 0.7499999999999994
+Problem E: a = 8, rho = 0.7318614732386289
+Problem F: a = 10, rho = 0.7308602028854456
+Problem G: a = 6, rho = 0.8464234094610489
+3. QWQAOA
+Parameters: p = 2, m = 3
+Problem A: rho = 0.9999999999999969
+Problem B: rho = 0.9999999999999954
+Problem C: rho = 0.9999999999999951
+Problem D: rho = 0.666666666666658
+Problem E: rho = 0.965723297699008
+Problem F: rho = 0.9999999999999976
+Problem G: rho = 0.6666666666666479

@@ -1,0 +1,51 @@
+import sys
+sys.path.append("../")
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+import visualization
+
+
+problem_names = ["A", "B", "C", "D", "E", "F", "G"]
+quad_ratios = [
+    0.9247001844603769,
+    0.971009844528638,
+    0.6640980522302965,
+    0.46455019244213364,
+    0.4251336238383605,
+    0.46180832857942883,
+    0.5184805072738382,
+]
+lin_ratios = [
+    0.9999999998424516,
+    0.9999999998424514,
+    0.9999999994112322,
+    0.7499999998907741,
+    0.7737958089981267,
+    0.8348949457550663,
+    0.8512722347828784,
+]
+qw_ratios = [
+    0.9999999999533222,
+    0.9466813134875444,
+    0.999999999999995,
+    0.9682307684501765,
+    0.9910497022401447,
+    0.9999999999999984,
+    0.8210344100073202,
+]
+
+x = np.arange(len(problem_names))
+width = 0.25
+
+plt.bar(x - width, quad_ratios, width, label="quad")
+plt.bar(x,  lin_ratios, width, label="lin")
+plt.bar(x + width, qw_ratios, width, label="qw")
+
+plt.ylabel(r"Approximation Ratio $\rho$")
+plt.xlabel("Problem")
+plt.xticks(x, problem_names)
+plt.legend(loc="lower left")
+plt.savefig("problem_dependence.pdf")
+plt.show()

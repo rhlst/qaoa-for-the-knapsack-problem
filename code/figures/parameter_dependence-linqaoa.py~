@@ -1,0 +1,71 @@
+import sys
+sys.path.append("../")
+
+from functools import partial
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+import linqaoa
+import quadqaoa
+import qwqaoa
+import knapsack
+import circuits
+import optimization
+import visualization
+
+
+def objective_function(bitstring, problem):
+    choice = linqaoa.bitstring_to_choice(bitstring, problem)
+    if knapsack.is_choice_feasible(choice, problem):
+        return knapsack.value(choice, problem)
+    return 0
+
+
+def linqaoa_expectation_value(problem, p, a):
+    circuit = circuits.LinQAOA(problem, p)
+    angles = linqaoa.find_optimal_angles(circuit, problem, a)
+    probs = linqaoa.get_probs_dict(circuit, problem, angles, a)
+    obj = partial(objective_function, problem=problem)
+    expectation = optimization.average_value(probs, obj)
+    return expectation
+
+
+def linqaoa_get_ratio(problem, p, a):
+    expectation = linqaoa_expectation_value(problem, p, a)
+    best_known_solutions = knapsack.best_known_solutions(problem)
+    choice = best_known_solutions[0]
+    best_value = knapsack.value(choice, problem)
+    ratio = expectation / best_value
+    return ratio
+
+
+print("running")
+
+name = "parameter_dependence-linqaoa"
+problem = knapsack.toy_problems[-1]
+amin = linqaoa.amin(problem)
+a_values = [x * amin for x in np.linspace(0, 10)]
+
+# linqaoa p-dependece
+p = 3
+ratios = [linqaoa_get_ratio(problem, p, a) for a in a_values]
+plt.plot(a_values, ratios, linestyle="")
+
+comment = f"""a-dependence of LinQAOA approach.
+
+Problem: {problem}
+Minimum good value of a: {amin}
+Considered Values of a: {a_values}
+Parameters: {p = }.
+Calculated approximation ratios: {ratios}
+"""
+
+with open(f"{name}.txt", "w") as f:
+    f.write(comment)
+
+plt.scatter(a_values, ratios)
+plt.xlabel(r"Penalty Scaling Factor $a$")
+plt.ylabel(r"Approximation Ratio $\rho$")
+plt.savefig(f"{name}.pdf")
+plt.show()

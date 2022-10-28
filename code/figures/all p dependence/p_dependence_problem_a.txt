@@ -1,0 +1,29 @@
+p-dependence of different QAOA approaches.
+
+Problem A
+Considered Values of p: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+1. Approach with quadratic penalty.
+Parameters: a = 1, b = 2 * bmin.
+Calculated approximation ratios: 
+QuadQAOA
+p = 1: rho = 0.25686335390875037
+p = 2: rho = 0.5149651108395985
+p = 3: rho = 0.7304774929269462
+p = 4: rho = 0.7852390361080505
+p = 5: rho = 0.8064946196525842
+[1]    5566 killed     python3 calculate_p_dependence.py
+LinQAOA
+p = 1: rho = 0.8792509153577563
+p = 2: rho = 0.9999999999999893
+p = 3: rho = 0.9999999999999647
+p = 4: rho = 1.0
+p = 5: rho = 0.9999999999999993
+[1]    14756 killed     python3 calculate_p_dependence.py
+QWQAOA
+p = 1: rho = 0.9473576531513922
+p = 2: rho = 0.9999999999999969
+p = 3: rho = 0.9999999999999909
+p = 4: rho = 0.9999999999999953
+p = 5: rho = 0.9999999999999934
+Cancelled

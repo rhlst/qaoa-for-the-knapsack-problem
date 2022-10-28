@@ -1,0 +1,53 @@
+import sys
+sys.path.append("../")
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+import visualization
+
+
+p_values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+quad_ratios = [
+    0.316390907416914,
+    0.3163943711217354,
+    0.519891958943167,
+    0.5184805072738382,
+    0.38402263339465575,
+    0.3213626855542354,
+    0.4069100664147138,
+    0.487455712791841,
+    0.4737649943489676
+]
+lin_ratios = [
+    0.40624999999999983,
+    0.8512722347828784,
+    0.8620323104372982,
+    0.9165123680090989,
+    0.9486538207578912,
+    0.9922123255266205,
+    0.8308948973711815,
+    0.9963477097904289,
+    0.9613456475506129
+]
+qw_ratios = [
+    1.5747477717949291e-31,
+    0.8210344100073202,
+    0.8350141015826577,
+    0.8047696455234065,
+    0.9137224874003232,
+    0.8810460397238633,
+    0.9372658196779328,
+    0.9568442068753326,
+    0.9612982668692868
+]
+
+plt.scatter(p_values, quad_ratios, marker="+", label="quad")
+plt.scatter(p_values, lin_ratios, marker="x", label="lin")
+plt.scatter(p_values, qw_ratios, marker="1", label="qw")
+plt.xlabel(r"Circuit Depth $p$")
+plt.ylabel(r"Approximation Ratio $\rho$")
+plt.legend()
+plt.savefig("p_dependence.pdf")
+plt.show()
+

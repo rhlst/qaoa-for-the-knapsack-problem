@@ -1,0 +1,139 @@
+import sys
+sys.path.append("../")
+
+from functools import partial
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+import linqaoa
+import quadqaoa
+import qwqaoa
+import knapsack
+import circuits
+import optimization
+import visualization
+
+
+def objective_function(bitstring, problem):
+    choice = linqaoa.bitstring_to_choice(bitstring, problem)
+    if knapsack.is_choice_feasible(choice, problem):
+        return knapsack.value(choice, problem)
+    return 0
+
+
+def quadqaoa_expectation_value(problem, p, a, b):
+    circuit = circuits.QuadQAOA(problem, p)
+    angles = quadqaoa.find_optimal_angles(circuit, problem, a, b)
+    probs = quadqaoa.get_probs_dict(circuit, problem, angles, a, b)
+    obj = partial(objective_function, problem=problem)
+    expectation = optimization.average_value(probs, obj)
+    return expectation
+
+
+def linqaoa_expectation_value(problem, p, a):
+    circuit = circuits.LinQAOA(problem, p)
+    angles = linqaoa.find_optimal_angles(circuit, problem, a)
+    probs = linqaoa.get_probs_dict(circuit, problem, angles, a)
+    obj = partial(objective_function, problem=problem)
+    expectation = optimization.average_value(probs, obj)
+    return expectation
+
+
+def qwqaoa_expectation_value(problem, p, m):
+    circuit = circuits.QuantumWalkQAOA(problem, p, m)
+    angles = qwqaoa.find_optimal_angles(circuit, problem)
+    probs = qwqaoa.get_probs_dict(circuit, problem, angles)
+    obj = partial(objective_function, problem=problem)
+    expectation = optimization.average_value(probs, obj)
+    return expectation
+
+
+def quadqaoa_get_ratio(problem, p, a, b):
+    expectation = quadqaoa_expectation_value(problem, p, a, b)
+    best_known_solutions = knapsack.best_known_solutions(problem)
+    choice = best_known_solutions[0]
+    best_value = knapsack.value(choice, problem)
+    ratio = expectation / best_value
+    print(f"{p=}, {ratio=}")
+    return ratio
+
+
+def linqaoa_get_ratio(problem, p, a):
+    expectation = linqaoa_expectation_value(problem, p, a)
+    best_known_solutions = knapsack.best_known_solutions(problem)
+    choice = best_known_solutions[0]
+    best_value = knapsack.value(choice, problem)
+    ratio = expectation / best_value
+    print(f"{p=}, {ratio=}")
+    return ratio
+
+
+def qwqaoa_get_ratio(problem, p, m):
+    expectation = qwqaoa_expectation_value(problem, p, m)
+    best_known_solutions = knapsack.best_known_solutions(problem)
+    choice = best_known_solutions[0]
+    best_value = knapsack.value(choice, problem)
+    ratio = expectation / best_value
+    print(f"{p=}, {ratio=}")
+    return ratio
+
+
+print("running")
+
+name = "p_dependence"
+problem = knapsack.toy_problems[-1]
+ps = list(range(1, 10))
+
+# quadqaoa p-dependence
+print("QuadQAOA...")
+a = 1
+b = 2 * quadqaoa.bmin(a, problem)
+ratios = [quadqaoa_get_ratio(problem, p, a, b) for p in ps]
+plt.plot(ps, ratios, linestyle="", label="Quad")
+
+comment = f"""p-dependence of different QAOA approaches.
+
+Problem: {problem}
+Considered Values of p: {ps}
+
+1. Approach with quadratic penalty.
+Parameters: {a = }, {b = }.
+Calculated approximation ratios: {ratios}
+"""
+
+with open(f"{name}.txt", "w") as f:
+    f.write(comment)
+
+# linqaoa p-dependece
+print("LinQAOA...")
+a = 2 * linqaoa.amin(problem)
+ratios = [linqaoa_get_ratio(problem, p, a) for p in ps]
+plt.plot(ps, ratios, linestyle="", label="Lin")
+
+comment = f"""2. Approach with linear penalty.
+Parameters: {a = }.
+Calculated approximation ratios: {ratios}
+"""
+
+with open(f"{name}.txt", "a") as f:
+    f.write(comment)
+
+# qwqaoa p-dependence
+print("QWQAOA...")
+m = 3
+ratios = [qwqaoa_get_ratio(problem, p, m) for p in ps]
+plt.plot(ps, ratios, linestyle="", label="QW")
+
+comment = f"""3. Approach with quantum walk mixer.
+Parameters: {m = }.
+Calculated approximation ratios: {ratios}
+"""
+
+with open(f"{name}.txt", "a") as f:
+    f.write(comment)
+
+plt.xlabel(r"Circuit Depth $p$")
+plt.ylabel(r"Approximation Ratio $\rho$")
+plt.savefig(f"{name}.pdf")
+plt.show()

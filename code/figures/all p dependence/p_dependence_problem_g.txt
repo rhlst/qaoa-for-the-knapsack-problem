@@ -1,0 +1,14 @@
+p-dependence of different QAOA approaches.
+
+Problem: KnapsackProblem(values=[1, 2, 1, 3], weights=[1, 2, 2, 1], max_weight=4)
+Considered Values of p: [1, 2, 3, 4, 5]
+
+1. Approach with quadratic penalty.
+Parameters: a = 1, b = 6.
+Calculated approximation ratios: [0.40728525192889137, 0.4247448434749554, 0.4322726043725352, 0.343872406269758, 0.419224617486492]
+2. Approach with linear penalty.
+Parameters: a = 6.
+Calculated approximation ratios: [0.6323973514991522, 0.8464234094610489, 0.9137193285291993, 0.9766984312138275, 0.999330989870212]
+3. Approach with quantum walk mixer.
+Parameters: m = 3.
+Calculated approximation ratios: [0.666666666666655, 0.6666666666666479, 0.6666666666666398, 0.8216196248662176, 0.8793545802797255]

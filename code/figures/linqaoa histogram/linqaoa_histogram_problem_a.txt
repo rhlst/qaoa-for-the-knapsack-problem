@@ -1,0 +1,4 @@
+Considered KnapsackProblem(values=[1, 2], weights=[1, 1], max_weight=1)
+LinQAOA circuit with p = 2 and a = 10
+Optimized angles: [4.18879028 1.38596931 1.1087974  0.62628165]
+Resulting Probabilities: {'00': 1.2004400448610911e-14, '01': 6.317778492203286e-29, '10': 0.9999999999999829, '11': 4.996825241981667e-15}

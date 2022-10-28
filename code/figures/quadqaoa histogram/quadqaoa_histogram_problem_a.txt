@@ -1,0 +1,5 @@
+Considered KnapsackProblem(values=[1, 2], weights=[1, 1], max_weight=1)
+QuadQAOA circuit with p = 4, a = 1 and b = 10
+Optimized angles: [47.18430682  1.66091219 15.80724481  2.34327252 47.11960037  0.92273586
+ 15.8987693   2.36687105]
+Resulting Probabilities: {'00': 0.01696827432507102, '01': 0.005073606711920087, '10': 0.9755565125617327, '11': 0.0024016064012766197}

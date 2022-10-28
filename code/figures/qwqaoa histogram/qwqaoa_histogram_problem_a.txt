@@ -1,0 +1,4 @@
+Considered KnapsackProblem(values=[1, 2], weights=[1, 1], max_weight=1)
+QuantumWalkQAOA circuit with p = 2 and m = 3
+Optimized angles: [1.57079633 0.93367446 3.14159265 5.68411203]
+Resulting Probabilities: {'00': 2.2432931670095917e-17, '01': 2.4208024862100702e-17, '10': 0.9999999999999969, '11': 9.111174870250756e-31}
